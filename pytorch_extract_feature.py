@@ -79,7 +79,7 @@ num_workers = 6
 
 # image transformer
 tf = trn.Compose([
-        trn.Scale(img_size),
+        trn.Resize(img_size),
         trn.ToTensor(),
         trn.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
 ])
