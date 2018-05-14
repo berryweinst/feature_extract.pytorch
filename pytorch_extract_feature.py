@@ -35,7 +35,7 @@ parser.add_argument("--layer_names", dest="layer_names", type=str, required=True
 parser.add_argument("--batch_size", dest="batch_size", type=int, default=64, help="batch size (64)")
 args = parser.parse_args()
 
-
+torch.cuda.set_device(0)
 # image datasest to be processed
 name_dataset = 'imagenetval'
 layer_names = args.layer_names.split(",")
@@ -54,7 +54,7 @@ name_model = 'vgg16'
 # model_file = '/data/vision/oliva/scenedataset/places2new/models/whole_wideresnet18_places365.pth.tar'
 model = models.vgg16(pretrained=True) #torch.load(model_file)
 model.eval()
-# model.cuda()
+model.cuda()
 
 # features_names = ['features']
 #features_names = ['layer4','avgpool'] # this is the last conv layer and global average pooling layers
@@ -113,7 +113,7 @@ for layer in layer_names:
             for batch_idx, (input, paths) in enumerate(loader):
                 del features_blobs[:]
                 print ('%d / %d' % (batch_idx, num_batches))
-                # input = input.cuda()
+                input = input.cuda()
                 with torch.no_grad():
                     # input_var = V(input, volatile=True)
                     input_var = V(input)
