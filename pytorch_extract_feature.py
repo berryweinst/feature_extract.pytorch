@@ -133,7 +133,7 @@ for layer in layer_names:
                         features_results[i][start_idx:end_idx] = feat_batch
 
             # save the features
-            save_name = name_dataset  + '_' + name_model + '_' + layer + '_' + idx
+            save_name = name_dataset  + '_' + name_model + '_' + layer + '_' + str(idx)
             np.savez('%s.npz'%save_name, features=features_results)
             del features_results
             gc.collect()
