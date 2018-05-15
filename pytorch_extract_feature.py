@@ -119,18 +119,17 @@ for layer in layer_names:
                     input_var = V(input)
                     logit = model.forward(input_var)
                     imglist_results = imglist_results + list(paths)
-                    if features_results[0] is None:
+                    if features_results is None:
                         # initialize the feature variable
-                        for i, feat_batch in enumerate(features_blobs):
-                            size_features = ()
-                            size_features = size_features + (len(dataset),)
-                            size_features = size_features + feat_batch.shape[1:]
-                            features_results[i] = np.zeros(size_features)
-                            print (features_results[i].shape)
+                        size_features = ()
+                        size_features = size_features + (len(dataset),)
+                        size_features = size_features + features_blobs[0].shape[1:]
+                        features_results = np.zeros(size_features)
+                        print (features_results.shape)
                     start_idx = batch_idx*batch_size
                     end_idx = min((batch_idx+1)*batch_size, len(dataset))
-                    for i, feat_batch in enumerate(features_blobs):
-                        features_results[i][start_idx:end_idx] = feat_batch
+                    features_results[start_idx:end_idx] = features_blobs[0]
+                    
 
             # save the features
             save_name = name_dataset  + '_' + name_model + '_' + layer + '_' + str(idx)
